@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stein trifft Holz – Dekoratives aus Wunderthausen</title>
+<meta name="description" content="Stein trifft Holz: handgemachte Dekoartikel aus Stein und Holz aus der Werkstatt in Bad Berleburg-Wunderthausen. Besuche nach telefonischer Absprache.">
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+<header class="kopf">
+  <a class="marke" href="#start">Stein <span>trifft</span> Holz</a>
+  <nav aria-label="Abschnitte">
+    <a href="#arbeiten"{{GALERIE_HIDDEN}}>Arbeiten</a>
+    <a href="#termine">Termine</a>
+    <a href="#ueber">Über</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+</header>
+
+<div class="pausen">{{PAUSEN}}</div>
+
+<main>
+  <section id="start" class="start">
+    {{TITELBILD}}
+    <div class="start-text">
+      <h1>Stein trifft Holz</h1>
+      {{BEGRUESSUNG}}
+    </div>
+  </section>
+
+  <section id="arbeiten"{{GALERIE_HIDDEN}}>
+    <h2>Arbeiten</h2>
+    <div class="galerie">{{GALERIE}}</div>
+  </section>
+
+  <section id="termine">
+    <h2>Termine &amp; Ausstellungen</h2>
+    {{TERMINE}}
+  </section>
+
+  <section id="ueber" class="ueber">
+    <h2>Über die Werkstatt</h2>
+    <div class="ueber-inhalt">
+      <div>{{UEBER}}</div>
+      {{UEBER_BILD}}
+    </div>
+  </section>
+
+  <section id="kontakt" class="kontakt">
+    <h2>Kontakt &amp; Anfahrt</h2>
+    <p class="besuch">{{BESUCH}}</p>
+    <ul class="wege">
+      <li><a href="{{TELEFON_LINK}}">Anrufen: {{TELEFON}}</a></li>
+      <li><a href="mailto:{{MAIL}}">{{MAIL}}</a></li>
+    </ul>
+    <address>Stein trifft Holz<br>{{STRASSE}}<br>{{ORT}}</address>
+    <p>Von Bad Berleburg über die L 717 nach Wunderthausen. In der Ortsmitte links und gleich wieder
+      rechts in „Auf der Leie“, links halten, dann rechts in „An der Hude“ – die Werkstatt liegt links.
+      Parkplätze sind knapp.</p>
+    <p><a href="https://www.openstreetmap.org/search?query=An%20der%20Hude%2010%2C%2057319%20Bad%20Berleburg" rel="noopener">Auf der Karte ansehen (OpenStreetMap)</a></p>
+  </section>
+</main>
+
+<footer class="fuss">
+  <p>© {{JAHR}} Stein trifft Holz · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+</footer>
+<script src="datum.js"></script>
+</body>
+</html>

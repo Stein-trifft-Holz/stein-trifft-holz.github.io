@@ -1,0 +1,61 @@
+/* Platzhalter-Optik für das Grundgerüst. Wird durch den gewählten Design-Entwurf ersetzt (S8/S9).
+   Schriften: Systemschriften, nichts von Google. */
+:root {
+  --stein: #6f6a64;
+  --holz: #8a5a35;
+  --papier: #f7f3ee;
+  --tinte: #2b2724;
+  --linie: #ddd5cb;
+  --pause: #fff1d6;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
+body { margin: 0; background: var(--papier); color: var(--tinte);
+  font: 1.0625rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--holz); }
+[hidden] { display: none !important; }
+
+.kopf { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem;
+  align-items: baseline; justify-content: space-between; padding: .75rem 1rem;
+  background: var(--papier); border-bottom: 1px solid var(--linie); }
+.marke { font-weight: 700; text-decoration: none; color: var(--tinte); letter-spacing: .02em; }
+.marke span { color: var(--holz); font-weight: 400; font-style: italic; }
+.kopf nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .95rem; }
+.kopf nav a { text-decoration: none; color: var(--stein); }
+
+.pause { margin: 0; padding: .75rem 1rem; background: var(--pause); border-bottom: 1px solid var(--linie);
+  text-align: center; font-weight: 600; }
+
+main { max-width: 68rem; margin: 0 auto; padding: 0 1rem; }
+section { padding: 2.5rem 0; border-bottom: 1px solid var(--linie); }
+h1 { font-size: clamp(2rem, 7vw, 3.5rem); line-height: 1.1; margin: 0 0 .5rem; }
+h2 { font-size: 1.6rem; margin: 0 0 1rem; color: var(--holz); }
+h3 { font-size: 1.1rem; margin: .1rem 0; }
+
+.start { padding-top: 1rem; }
+.titelbild { width: 100%; max-height: 70vh; object-fit: cover; border-radius: 4px; margin-bottom: 1.25rem; }
+
+.galerie { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+@media (min-width: 700px) { .galerie { grid-template-columns: repeat(3, 1fr); } }
+.galerie figure { margin: 0; }
+.galerie img { aspect-ratio: 1; object-fit: cover; width: 100%; border-radius: 4px; }
+.galerie figcaption { font-size: .9rem; color: var(--stein); margin-top: .3rem; }
+
+.termine { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.termin { padding: 1rem; background: #fff; border: 1px solid var(--linie); border-radius: 4px; }
+.termin time { color: var(--holz); font-weight: 700; }
+.termin .ort { margin: 0; color: var(--stein); }
+.termin p { margin: .25rem 0 0; }
+
+.ueber-inhalt { display: grid; gap: 1.25rem; }
+@media (min-width: 700px) { .ueber-inhalt { grid-template-columns: 3fr 2fr; align-items: start; } }
+
+.kontakt address { font-style: normal; margin: 1rem 0; }
+.besuch { font-weight: 600; }
+.wege { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+.wege a { display: inline-block; padding: .6rem 1rem; border: 1px solid var(--holz); border-radius: 4px;
+  text-decoration: none; overflow-wrap: anywhere; }
+
+.fuss { text-align: center; padding: 2rem 1rem; color: var(--stein); font-size: .9rem; }
+.recht { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }

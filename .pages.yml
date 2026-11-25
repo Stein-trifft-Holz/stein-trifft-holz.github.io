@@ -1,0 +1,123 @@
+# Verwaltung für Pages CMS (https://pagescms.org)
+# Katja wird per Mail eingeladen und braucht kein Konto.
+# Hochgeladene Fotos landen in bilder/ und werden beim Bauen automatisch verkleinert.
+
+media:
+  input: bilder
+  output: /bilder
+  categories: [image]
+  rename: safe
+
+content:
+  - name: pausen
+    label: "Pause (keine Aufträge)"
+    type: file
+    path: inhalt/pausen.json
+    format: json
+    list: true
+    fields:
+      - name: von
+        label: "Pause ab"
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: bis
+        label: "Pause bis einschließlich"
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: text
+        label: "Eigener Hinweistext (leer lassen = Standardtext)"
+        type: text
+        description: "Der Hinweis erscheint 30 Tage vor Beginn und verschwindet nach dem letzten Tag von selbst."
+
+  - name: termine
+    label: "Termine & Ausstellungen"
+    type: file
+    path: inhalt/termine.json
+    format: json
+    list: true
+    fields:
+      - name: titel
+        label: "Was"
+        type: string
+        required: true
+        description: "z. B. Frühlingsmarkt Hesborn"
+      - name: von
+        label: "Datum (erster Tag)"
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: bis
+        label: "Letzter Tag (nur bei mehreren Tagen)"
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: ort
+        label: "Ort"
+        type: string
+        required: true
+      - name: partner
+        label: "Partner (optional)"
+        type: string
+        description: "z. B. Wiebelhaus"
+      - name: link
+        label: "Link (optional)"
+        type: string
+      - name: text
+        label: "Kurzbeschreibung (optional)"
+        type: text
+
+  - name: galerie
+    label: "Fotos der Arbeiten"
+    type: file
+    path: inhalt/galerie.json
+    format: json
+    list: true
+    fields:
+      - name: bild
+        label: "Foto"
+        type: image
+        required: true
+      - name: titel
+        label: "Beschreibung (optional)"
+        type: string
+        description: "Kurz, z. B. „Kerzenhalter aus Eiche und Schiefer“ – hilft auch Sehbehinderten."
+
+  - name: texte
+    label: "Texte & Kontakt"
+    type: file
+    path: inhalt/texte.json
+    format: json
+    fields:
+      - name: titelbild
+        label: "Großes Foto oben"
+        type: image
+      - name: begruessung
+        label: "Begrüßung (ein, zwei Sätze)"
+        type: text
+      - name: ueber
+        label: "Über die Werkstatt"
+        type: text
+      - name: ueber_bild
+        label: "Foto zu „Über die Werkstatt“"
+        type: image
+      - name: telefon
+        label: "Telefon"
+        type: string
+      - name: mail
+        label: "E-Mail"
+        type: string
+      - name: strasse
+        label: "Straße"
+        type: string
+      - name: ort
+        label: "PLZ und Ort"
+        type: string
+      - name: besuch
+        label: "Hinweis zu Besuchen"
+        type: string
