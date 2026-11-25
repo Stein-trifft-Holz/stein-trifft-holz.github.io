@@ -113,7 +113,7 @@ content:
         label: "Foto zu „Über die Werkstatt“"
         type: image
       - name: telefon
-        label: "Telefon"
+        label: "Handynummer (auch für WhatsApp)"
         type: string
       - name: mail
         label: "E-Mail"

@@ -76,18 +76,20 @@
         <h2>Kontakt</h2>
         <p>Kein Laden mit festen Öffnungszeiten. <strong>{{BESUCH}}</strong></p>
         <a class="telefon" href="{{TELEFON_LINK}}">{{TELEFON}}</a>
+        <p class="kontakt-knoepfe">
+          <a class="knopf knopf-gold" href="{{TELEFON_LINK}}">Anrufen</a>
+          <a class="knopf knopf-rand" href="{{WHATSAPP_LINK}}" rel="noopener">Per WhatsApp schreiben</a>
+        </p>
         <a class="mail" href="mailto:{{MAIL}}">{{MAIL}}</a>
       </div>
       <div>
         <h3 class="dachzeile leise">Anfahrt</h3>
         <address>{{STRASSE}}<br>{{ORT}}</address>
-        <ol class="anfahrt">
-          <li>Von Bad Berleburg über die L 717 nach Wunderthausen</li>
-          <li>In der Ortsmitte links, gleich wieder rechts in „Auf der Leie“</li>
-          <li>Links halten, dann rechts in „An der Hude“</li>
-          <li>Die Werkstatt liegt links – Parkplätze sind knapp</li>
-        </ol>
-        <a href="https://www.openstreetmap.org/search?query=An%20der%20Hude%2010%2C%2057319%20Bad%20Berleburg" rel="noopener">Auf der Karte ansehen (OpenStreetMap)</a>
+        <a class="karte" href="https://www.google.com/maps/search/?api=1&amp;query=An+der+Hude+10%2C+57319+Bad+Berleburg" rel="noopener">
+          <img src="karte.webp" width="1000" height="620" loading="lazy" alt="Kartenausschnitt von Wunderthausen, die Werkstatt An der Hude 10 ist markiert">
+          <span class="karte-knopf">In Google Maps öffnen</span>
+        </a>
+        <p class="leise karte-hinweis">Parkplätze sind knapp.</p>
       </div>
     </div>
   </section>

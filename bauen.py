@@ -180,6 +180,7 @@ def bauen(inhalt, bildquelle, ziel, heute):
         "UEBER_BILD": img(ueber_bild, "Die Werkstatt", "(min-width: 700px) 40vw, 100vw") or "<div></div>",
         "TELEFON": esc(tel),
         "TELEFON_LINK": "tel:+49" + "".join(c for c in tel if c.isdigit()).lstrip("0"),
+        "WHATSAPP_LINK": "https://wa.me/49" + "".join(c for c in tel if c.isdigit()).lstrip("0"),
         "MAIL": esc(texte.get("mail")),
         "STRASSE": esc(texte.get("strasse")),
         "ORT": esc(texte.get("ort")),
@@ -194,8 +195,11 @@ def bauen(inhalt, bildquelle, ziel, heute):
         (ziel / name).write_text(seite, encoding="utf-8")
         if "ENTWURF" in seite or re.search(r"\[[A-ZÄÖÜ][^\]]{3,}\]", seite):
             print(f"WARNUNG: {name} enthält noch Entwurfsstellen [in Klammern] – so nicht veröffentlichen.")
-    for name in ("stil.css", "seite.js", "zeichen.svg"):
-        shutil.copy(HIER / "vorlage" / name, ziel / name)
+    for name in ("stil.css", "seite.js", "zeichen.svg", "karte.webp"):
+        if (HIER / "vorlage" / name).exists():
+            shutil.copy(HIER / "vorlage" / name, ziel / name)
+        else:
+            print(f"HINWEIS: vorlage/{name} fehlt.")
     schriften = HIER / "vorlage" / "schriften"
     if any(schriften.glob("*.woff2")):
         shutil.copytree(schriften, ziel / "schriften")

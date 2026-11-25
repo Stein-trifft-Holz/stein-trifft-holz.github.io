@@ -116,10 +116,15 @@ section { padding-block: 5.5rem; }
 .kontakt p { margin: 0 0 2rem; }
 .kontakt strong { font-weight: 600; color: var(--hell); }
 .telefon { display: block; font-family: var(--serif); font-size: clamp(2.2rem, 6vw, 3rem); line-height: 1.1; text-decoration: none; margin-bottom: .75rem; }
+.kontakt .kontakt-knoepfe { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0 0 1.25rem; }
 .mail { color: var(--text); overflow-wrap: anywhere; }
 .kontakt address { font-style: normal; color: var(--hell); font-size: 1.25rem; margin: 0 0 1.5rem; }
-.anfahrt { margin: 0 0 1.5rem; padding-left: 1.4rem; color: var(--gedaempft); }
-.anfahrt li::marker { color: var(--silber); font-weight: 600; }
+.karte { position: relative; display: block; outline: 1px solid var(--silber); outline-offset: 6px; margin: 6px 0 1rem; }
+.karte img { width: 100%; aspect-ratio: 50 / 31; object-fit: cover; }
+.karte-knopf { position: absolute; left: .75rem; bottom: .75rem; display: inline-flex; align-items: center; min-height: 44px;
+  padding: .6rem 1.1rem; border-radius: 999px; background: var(--gold); color: var(--grund); font-weight: 600; font-size: .95rem; }
+.karte:hover .karte-knopf { background: #d9b866; }
+.karte-hinweis { margin: 0; }
 
 /* Fuß */
 .trenner { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 2.5rem 1.5rem 0; }
