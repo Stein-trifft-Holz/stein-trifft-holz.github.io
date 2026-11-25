@@ -38,6 +38,7 @@ def testdaten(ordner):
         "begruessung": "[Testtext] Begrüßung.",
         "ueber": "[Testtext] Erster Absatz.\n\nZweiter Absatz.",
         "ueber_bild": "/bilder/foto-2.jpg",
+        "zitat": "[Testzitat]", "unterschrift": "[Testname]",
         "telefon": "02750 222580", "mail": "stein-trifft-holz@t-online.de",
         "strasse": "An der Hude 10", "ort": "57319 Bad Berleburg-Wunderthausen",
         "besuch": "Besuche und Aufträge nach telefonischer Absprache.",
@@ -51,8 +52,9 @@ def testdaten(ordner):
     ]), encoding="utf-8")
     (inhalt / "pausen.json").write_text(json.dumps([
         {"von": T(-40), "bis": T(-1), "text": "TEST-PAUSE-VORBEI"},
-        {"von": T(10), "bis": T(60), "text": "TEST-PAUSE-BALD"},
+        {"von": T(10), "bis": T(60)},
         {"von": T(45), "bis": T(90), "text": "TEST-PAUSE-ZU-FRUEH"},
+        {"von": T(-2), "bis": T(5), "text": "TEST-PAUSE-LAEUFT"},
     ]), encoding="utf-8")
     return inhalt, bilder
 
@@ -65,9 +67,13 @@ def pruefen(ziel):
         "Termin, der heute endet, steht da": "TEST-MEHRTAEGIG-ENDET-HEUTE" in seite,
         "kommender Termin steht da": "TEST-KOMMEND" in seite,
         "Partner wird genannt": "mit Wiebelhaus" in seite,
-        "Pause in 10 Tagen sichtbar": re.search(r'<p class="pause"[^>]*>TEST-PAUSE-BALD', seite) is not None,
-        "Pause in 45 Tagen verborgen": re.search(r'<p class="pause"[^>]*hidden>TEST-PAUSE-ZU-FRUEH', seite) is not None,
-        "vergangene Pause verborgen": re.search(r'<p class="pause"[^>]*hidden>TEST-PAUSE-VORBEI', seite) is not None,
+        "Pause in 10 Tagen angekündigt (Standardtext)": re.search(r'<p class="pause bald" data-ab="[^"]+" data-von="2027-04-20"[^>]*"><span class="bald-text">Vom <strong>20.04.2027</strong>', seite) is not None,
+        "laufende Pause sichtbar und als 'jetzt' markiert": re.search(r'<p class="pause jetzt"[^>]*"><span class="bald-text">TEST-PAUSE-LAEUFT', seite) is not None,
+        "Pause in 45 Tagen verborgen": re.search(r'<p class="pause bald"[^>]*hidden><span class="bald-text">TEST-PAUSE-ZU-FRUEH', seite) is not None,
+        "vergangene Pause verborgen": re.search(r'<p class="pause jetzt"[^>]*hidden><span class="bald-text">TEST-PAUSE-VORBEI', seite) is not None,
+        "erster kommender Termin ist 'nächster'": re.search(r'<li class="termin naechster"[^>]*>.*?TEST-MEHRTAEGIG-ENDET-HEUTE', seite) is not None,
+        "Zitat und Unterschrift": "„[Testzitat]“" in seite and "[Testname]" in seite,
+        "Foto-Knöpfe zum Vergrößern": seite.count('data-gross="bilder/') == 6,
         "keine Platzhalter übrig": "{{" not in seite,
         "keine fremden Skripte/Schriften/Stile": not re.search(r'<(script|link)[^>]+(src|href)="https?://', seite)
         and "googleapis" not in seite and "gstatic" not in seite,

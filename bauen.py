@@ -13,6 +13,7 @@ import argparse
 import datetime as dt
 import html
 import json
+import re
 import shutil
 from pathlib import Path
 
@@ -96,11 +97,16 @@ def pausen_html(pausen, heute):
             continue
         ab = von - dt.timedelta(days=VORLAUF_PAUSE)
         sichtbar = ab <= heute <= bis
-        text = (p.get("text") or "").strip() or (
-            f"Werkstattpause vom {tag(von)} bis {tag(bis)} – in dieser Zeit nimmt die Werkstatt keine Aufträge an.")
+        stufe = "jetzt" if heute >= von else "bald"
+        eigen = esc((p.get("text") or "").strip())
+        bald = eigen or (f"Vom <strong>{tag(von)}</strong> bis <strong>{tag(bis)}</strong> ist Werkstattpause. "
+                         "Aufträge bitte vorher absprechen.")
+        jetzt = eigen or (f"<strong>Werkstattpause bis {tag(bis)}</strong> – in dieser Zeit nimmt die Werkstatt "
+                          "keine Aufträge an.")
         teile.append(
-            f'<p class="pause" data-ab="{ab.isoformat()}" data-bis="{bis.isoformat()}"'
-            f'{"" if sichtbar else " hidden"}>{esc(text)}</p>')
+            f'<p class="pause {stufe}" data-ab="{ab.isoformat()}" data-von="{von.isoformat()}" '
+            f'data-bis="{bis.isoformat()}"{"" if sichtbar else " hidden"}>'
+            f'<span class="bald-text">{bald}</span><span class="jetzt-text">{jetzt}</span></p>')
     return "\n".join(teile)
 
 
@@ -113,17 +119,22 @@ def termine_html(termine, heute):
         ende = bis or von
         if ende < heute:
             continue
-        titel = esc(t.get("titel"))
-        if t.get("link"):
-            titel = f'<a href="{esc(t["link"])}" rel="noopener">{titel}</a>'
+        klasse = "termin naechster" if not zeilen else "termin"
         partner = f' · mit {esc(t["partner"])}' if t.get("partner") else ""
-        text = f'<p>{esc(t["text"])}</p>' if t.get("text") else ""
+        text = f'<p class="beschreibung">{esc(t["text"])}</p>' if t.get("text") else ""
+        link = ""
+        if t.get("link"):
+            link = f'<a href="{esc(t["link"])}" rel="noopener">{esc(t.get("partner") or "Mehr erfahren")}</a>'
         zeilen.append(
-            f'<li class="termin" data-bis="{ende.isoformat()}">'
-            f'<time datetime="{von.isoformat()}">{zeitraum(von, bis)}</time>'
-            f'<h3>{titel}</h3><p class="ort">{esc(t.get("ort"))}{partner}</p>{text}</li>')
-    leer = '<p class="leer"{}>Gerade stehen keine Termine an – fragen Sie gern telefonisch nach.</p>'
-    return (f'<ul class="termine">{"".join(zeilen)}</ul>' + leer.format(" hidden" if zeilen else ""))
+            f'<li class="{klasse}" data-bis="{ende.isoformat()}">'
+            f'<div class="datum"><span class="abzeichen">Nächster Termin</span>'
+            f'<time datetime="{von.isoformat()}">{zeitraum(von, bis)}</time></div>'
+            f'<div><h3>{esc(t.get("titel"))}</h3><p class="ort">{esc(t.get("ort"))}{partner}</p>{text}</div>'
+            f'<p class="link">{link}</p></li>')
+    leer = ('<p class="leer"{}>Gerade stehen keine Termine an – fragen Sie gern '
+            '<a href="#kontakt">telefonisch</a> nach.</p>')
+    liste = f'<ul class="termine">{"".join(zeilen)}</ul>' if zeilen else ""
+    return liste + leer.format(" hidden" if zeilen else "")
 
 
 def galerie_html(galerie, bilder):
@@ -131,8 +142,12 @@ def galerie_html(galerie, bilder):
     for g in galerie:
         info = bilder(g.get("bild"))
         if info:
-            unter = f'<figcaption>{esc(g["titel"])}</figcaption>' if g.get("titel") else ""
-            stuecke.append(f'<figure>{img(info, g.get("titel") or "Arbeit aus der Werkstatt", "(min-width: 700px) 33vw, 50vw")}{unter}</figure>')
+            titel = g.get("titel") or ""
+            unter = f'<figcaption>{esc(titel)}</figcaption>' if titel else ""
+            stuecke.append(
+                f'<figure><button type="button" data-gross="{info["src"]}" data-titel="{esc(titel)}" '
+                f'aria-label="Foto vergrößern{": " + esc(titel) if titel else ""}">'
+                f'{img(info, titel or "Arbeit aus der Werkstatt", "(min-width: 700px) 25vw, 50vw")}</button>{unter}</figure>')
     return "\n".join(stuecke)
 
 
@@ -160,7 +175,9 @@ def bauen(inhalt, bildquelle, ziel, heute):
         "GALERIE_HIDDEN": "" if gal else " hidden",
         "TERMINE": termine_html(termine, heute),
         "UEBER": absatz(texte.get("ueber")),
-        "UEBER_BILD": img(ueber_bild, "Die Werkstatt", "(min-width: 700px) 40vw, 100vw"),
+        "ZITAT": f'<p class="zitat">„{esc(texte["zitat"])}“</p>' if texte.get("zitat") else "",
+        "UNTERSCHRIFT": f'<p class="unterschrift">{esc(texte["unterschrift"])}</p>' if texte.get("unterschrift") else "",
+        "UEBER_BILD": img(ueber_bild, "Die Werkstatt", "(min-width: 700px) 40vw, 100vw") or "<div></div>",
         "TELEFON": esc(tel),
         "TELEFON_LINK": "tel:+49" + "".join(c for c in tel if c.isdigit()).lstrip("0"),
         "MAIL": esc(texte.get("mail")),
@@ -175,9 +192,15 @@ def bauen(inhalt, bildquelle, ziel, heute):
         for k, v in felder.items():
             seite = seite.replace("{{" + k + "}}", v)
         (ziel / name).write_text(seite, encoding="utf-8")
-    for extra in (HIER / "vorlage").iterdir():
-        if extra.suffix in (".css", ".js", ".woff2", ".svg", ".png", ".ico"):
-            shutil.copy(extra, ziel / extra.name)
+        if "ENTWURF" in seite or re.search(r"\[[A-ZÄÖÜ][^\]]{3,}\]", seite):
+            print(f"WARNUNG: {name} enthält noch Entwurfsstellen [in Klammern] – so nicht veröffentlichen.")
+    for name in ("stil.css", "seite.js", "zeichen.svg"):
+        shutil.copy(HIER / "vorlage" / name, ziel / name)
+    schriften = HIER / "vorlage" / "schriften"
+    if any(schriften.glob("*.woff2")):
+        shutil.copytree(schriften, ziel / "schriften")
+    else:
+        print("HINWEIS: vorlage/schriften/ ist leer – die Seite nutzt Ersatzschriften.")
     (ziel / ".nojekyll").write_text("")
     print(f"Gebaut nach {ziel} (Stand {heute}): {len(galerie)} Fotos, "
           f"{felder['TERMINE'].count('<li')} kommende Termine.")

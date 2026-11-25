@@ -1,61 +1,172 @@
-/* Platzhalter-Optik für das Grundgerüst. Wird durch den gewählten Design-Entwurf ersetzt (S8/S9).
-   Schriften: Systemschriften, nichts von Google. */
+/* Stein trifft Holz – Entwurf B „Schiefer“ mit Gold (gewählt 2026-11-25).
+   Schriften liegen in schriften/ auf der eigenen Seite – nichts wird von Google geladen. */
+@font-face { font-family: "DM Serif Display"; src: url("schriften/dm-serif-display-regular.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "DM Serif Display"; font-style: italic; src: url("schriften/dm-serif-display-italic.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Inter"; src: url("schriften/inter-variabel.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
 :root {
-  --stein: #6f6a64;
-  --holz: #8a5a35;
-  --papier: #f7f3ee;
-  --tinte: #2b2724;
-  --linie: #ddd5cb;
-  --pause: #fff1d6;
+  --grund: #1f2226;
+  --flaeche: #262a2f;
+  --kontakt: #2a2e33;
+  --linie: #3a3e44;
+  --platz: #3a3e44;
+  --text: #e9e5df;
+  --hell: #f3efe9;
+  --gedaempft: #c9c3bb;
+  --leise: #9d978f;
+  --gold: #c9a54e;
+  --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
-body { margin: 0; background: var(--papier); color: var(--tinte);
-  font: 1.0625rem/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { margin: 0; background: var(--grund); color: var(--text); font: 1.0625rem/1.65 var(--sans); }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--holz); }
+a { color: var(--gold); }
+a:hover { color: #e3c477; }
 [hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-.kopf { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: .25rem 1.25rem;
-  align-items: baseline; justify-content: space-between; padding: .75rem 1rem;
-  background: var(--papier); border-bottom: 1px solid var(--linie); }
-.marke { font-weight: 700; text-decoration: none; color: var(--tinte); letter-spacing: .02em; }
-.marke span { color: var(--holz); font-weight: 400; font-style: italic; }
-.kopf nav { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .95rem; }
-.kopf nav a { text-decoration: none; color: var(--stein); }
+.breit { max-width: 75rem; margin-inline: auto; padding-inline: 1.5rem; }
+h1, h2 { font-family: var(--serif); font-weight: 400; color: var(--hell); }
+h2 { font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 1.5rem; }
+h2::after { content: ""; display: block; width: 56px; height: 2px; margin-top: .9rem; background: var(--gold); }
+h3 { margin: 0; }
+em { font-style: italic; color: var(--gold); }
+.leise { color: var(--leise); font-size: .95rem; }
+.dachzeile { margin: 0 0 .75rem; font-size: .8rem; font-weight: 500; text-transform: uppercase; letter-spacing: .18em; color: var(--gold); }
+.dachzeile.leise { color: var(--leise); }
 
-.pause { margin: 0; padding: .75rem 1rem; background: var(--pause); border-bottom: 1px solid var(--linie);
-  text-align: center; font-weight: 600; }
+/* Pause */
+.pause { margin: 0; padding: .75rem 1.5rem; text-align: center; font-size: .95rem; }
+.pause.bald { background: var(--platz); color: var(--hell); }
+.pause.jetzt { background: var(--gold); color: var(--grund); }
+.pause.bald .jetzt-text, .pause.jetzt .bald-text { display: none; }
 
-main { max-width: 68rem; margin: 0 auto; padding: 0 1rem; }
-section { padding: 2.5rem 0; border-bottom: 1px solid var(--linie); }
-h1 { font-size: clamp(2rem, 7vw, 3.5rem); line-height: 1.1; margin: 0 0 .5rem; }
-h2 { font-size: 1.6rem; margin: 0 0 1rem; color: var(--holz); }
-h3 { font-size: 1.1rem; margin: .1rem 0; }
+/* Kopf */
+.kopf { position: sticky; top: 0; z-index: 10; background: rgba(31, 34, 38, .96); display: flex; flex-wrap: wrap;
+  align-items: center; gap: .75rem 2.5rem; max-width: 75rem; margin-inline: auto; padding: 1rem 1.5rem; }
+.marke { display: inline-flex; align-items: center; gap: .75rem; text-decoration: none; color: var(--hell);
+  font-family: var(--serif); font-size: 1.6rem; margin-right: auto; }
+.abschnitte { display: flex; gap: 1.75rem; font-size: .85rem; text-transform: uppercase; letter-spacing: .12em; }
+.abschnitte a { color: #b9b3ab; text-decoration: none; }
+.abschnitte a:hover { color: var(--hell); }
 
-.start { padding-top: 1rem; }
-.titelbild { width: 100%; max-height: 70vh; object-fit: cover; border-radius: 4px; margin-bottom: 1.25rem; }
+.knopf { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .7rem 1.4rem;
+  border-radius: 999px; text-decoration: none; font-weight: 600; }
+.knopf-gold { background: var(--gold); color: var(--grund); }
+.knopf-gold:hover { background: #d9b866; color: var(--grund); }
+.knopf-hell { background: var(--text); color: var(--grund); }
+.knopf-hell:hover { background: #fff; color: var(--grund); }
+.knopf-rand { border: 1px solid #6b6f76; color: var(--text); font-weight: 500; }
+.knopf-rand:hover { border-color: var(--gold); color: var(--hell); }
 
-.galerie { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
-@media (min-width: 700px) { .galerie { grid-template-columns: repeat(3, 1fr); } }
+/* Start */
+.start { padding-top: .75rem; padding-bottom: 5.5rem; }
+.titelbild { width: 100%; height: min(600px, 70vh); object-fit: cover; outline: 1px solid var(--gold); outline-offset: 12px; margin: 12px 0; }
+.start-raster { display: grid; gap: 2rem; margin-top: 3rem; align-items: end; }
+.start h1 { margin: 0; font-size: clamp(3.2rem, 9vw, 5.25rem); line-height: .98; }
+.begruessung p { margin: 0 0 1.5rem; color: var(--gedaempft); font-size: 1.15rem; }
+.knoepfe { display: flex; flex-wrap: wrap; gap: .75rem; margin: 0; }
+
+section { padding-block: 5.5rem; }
+#arbeiten, #ueber { border-top: 1px solid var(--linie); }
+.kopfzeile { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .5rem 2rem; }
+.kopfzeile p { margin: 0 0 1.5rem; }
+
+/* Galerie */
+.galerie { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
 .galerie figure { margin: 0; }
-.galerie img { aspect-ratio: 1; object-fit: cover; width: 100%; border-radius: 4px; }
-.galerie figcaption { font-size: .9rem; color: var(--stein); margin-top: .3rem; }
+.galerie button { display: block; width: 100%; padding: 0; border: 0; background: var(--platz); cursor: zoom-in; }
+.galerie img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.galerie figure:first-child { grid-column: span 2; }
+.galerie figure:first-child img { aspect-ratio: 4 / 3; }
+.galerie figcaption { margin-top: .6rem; font-size: .88rem; color: var(--leise); }
 
-.termine { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
-.termin { padding: 1rem; background: #fff; border: 1px solid var(--linie); border-radius: 4px; }
-.termin time { color: var(--holz); font-weight: 700; }
-.termin .ort { margin: 0; color: var(--stein); }
-.termin p { margin: .25rem 0 0; }
+/* Termine */
+.flaeche { background: var(--flaeche); }
+.unterzeile { margin: -0.5rem 0 2.25rem; }
+.termine { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linie); }
+.termin { display: grid; gap: .25rem 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--linie); align-items: center; }
+.termin time { font-family: var(--serif); font-size: 1.75rem; line-height: 1.15; color: var(--text); }
+.termin.naechster time { color: var(--gold); }
+.abzeichen { display: none; justify-self: start; margin-bottom: .35rem; padding: .1rem .6rem; border-radius: 999px; background: var(--gold);
+  color: var(--grund); font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.termin.naechster .abzeichen { display: inline-block; }
+.termin h3 { font-size: 1.25rem; font-weight: 600; color: var(--hell); }
+.termin .ort, .termin .beschreibung { margin: 0; color: #b9b3ab; }
+.termin .beschreibung { margin-top: .35rem; }
+.termin .link { margin: 0; }
+.leer { margin: 0; padding: 1.75rem 0; border-top: 1px solid var(--linie); border-bottom: 1px solid var(--linie); color: var(--gedaempft); }
 
-.ueber-inhalt { display: grid; gap: 1.25rem; }
-@media (min-width: 700px) { .ueber-inhalt { grid-template-columns: 3fr 2fr; align-items: start; } }
+/* Über */
+.ueber { display: grid; gap: 3.5rem; align-items: center; }
+.ueber > img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; outline: 1px solid var(--gold); outline-offset: 12px; margin: 12px; width: calc(100% - 24px); }
+.zitat { margin: 0 0 2rem; padding-left: 1.5rem; border-left: 2px solid var(--gold); font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 1.9rem); line-height: 1.3; color: var(--text); }
+.fliesstext p { margin: 0 0 1.1rem; color: var(--gedaempft); }
+.unterschrift { margin: 1.5rem 0 0; font-family: var(--serif); font-size: 1.4rem; color: var(--gold); }
 
-.kontakt address { font-style: normal; margin: 1rem 0; }
-.besuch { font-weight: 600; }
-.wege { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
-.wege a { display: inline-block; padding: .6rem 1rem; border: 1px solid var(--holz); border-radius: 4px;
-  text-decoration: none; overflow-wrap: anywhere; }
+/* Kontakt */
+.kontakt { background: var(--kontakt); border-top: 2px solid var(--gold); }
+.kontakt-raster { display: grid; gap: 3.5rem; }
+.kontakt p { margin: 0 0 2rem; }
+.kontakt strong { font-weight: 600; color: var(--hell); }
+.telefon { display: block; font-family: var(--serif); font-size: clamp(2.2rem, 6vw, 3rem); line-height: 1.1; text-decoration: none; margin-bottom: .75rem; }
+.mail { color: var(--text); overflow-wrap: anywhere; }
+.kontakt address { font-style: normal; color: var(--hell); font-size: 1.25rem; margin: 0 0 1.5rem; }
+.anfahrt { margin: 0 0 1.5rem; padding-left: 1.4rem; color: var(--gedaempft); }
+.anfahrt li::marker { color: var(--gold); font-weight: 600; }
 
-.fuss { text-align: center; padding: 2rem 1rem; color: var(--stein); font-size: .9rem; }
-.recht { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+/* Fuß */
+.trenner { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 2.5rem 1.5rem 0; }
+.trenner span { width: 80px; height: 1px; background: var(--gold); }
+.fuss { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem; padding-block: 1.5rem 2rem; font-size: .88rem; color: #8c867e; }
+.fuss p { margin: 0; }
+.fuss a { color: #b9b3ab; }
+
+/* Foto groß */
+.gross { width: min(1100px, 100vw); max-width: 100vw; max-height: 100vh; padding: 3.5rem 1rem 1.5rem; border: 0; background: #0f1113; color: var(--text); }
+.gross::backdrop { background: rgba(10, 11, 12, .9); }
+.gross img { max-height: 75vh; width: auto; margin: 0 auto; }
+.gross-text { text-align: center; color: var(--gedaempft); margin: 1rem 0; }
+.gross-knoepfe { display: flex; justify-content: center; gap: .75rem; }
+.rund { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--linie); background: transparent; color: var(--text);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.rund:hover { border-color: var(--gold); }
+.schliessen { position: absolute; top: .75rem; right: .75rem; }
+
+/* Rechtsseiten */
+.recht { max-width: 46rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.recht h1 { font-size: 2.6rem; margin: 0 0 1.5rem; }
+.recht h2 { font-size: 1.5rem; margin: 2rem 0 .75rem; }
+.recht h2::after { display: none; }
+.recht p, .recht li { color: var(--gedaempft); }
+
+/* Handy */
+@media (max-width: 699px) {
+  section { padding-block: 3rem; }
+  .kopf { padding: .75rem 1rem; gap: .5rem; }
+  .breit { padding-inline: 1rem; }
+  .marke { font-size: 1.35rem; }
+  .marke .zeichen { width: 28px; height: 28px; }
+  .abschnitte { width: 100%; gap: .5rem; overflow-x: auto; text-transform: none; letter-spacing: 0; font-size: .9rem; }
+  .abschnitte a { flex: none; padding: .55rem .9rem; border: 1px solid var(--linie); border-radius: 999px; }
+  .titelbild { outline-offset: 8px; margin: 8px 0; height: 420px; }
+  .knoepfe .knopf { flex: 1 1 100%; }
+  .termin time { font-size: 1.6rem; }
+  .ueber > img { outline-offset: 8px; margin: 8px; width: calc(100% - 16px); }
+}
+/* Rechner */
+@media (min-width: 700px) {
+  .anrufen-kopf { order: 3; }
+  .start-raster { grid-template-columns: 7fr 5fr; gap: 2rem; }
+  .galerie { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .galerie figure:first-child { grid-column: span 2; grid-row: span 2; }
+  .galerie figure:first-child button, .galerie figure:first-child img { height: 100%; }
+  .galerie figure:first-child img { aspect-ratio: auto; min-height: 30rem; }
+  .termin { grid-template-columns: 3fr 6fr 3fr; }
+  .termin .link { text-align: right; }
+  .ueber { grid-template-columns: 5fr 7fr; }
+  .kontakt-raster { grid-template-columns: 1fr 1fr; }
+}

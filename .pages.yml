@@ -103,6 +103,12 @@ content:
       - name: ueber
         label: "Über die Werkstatt"
         type: text
+      - name: zitat
+        label: "Ein Satz von dir (optional, erscheint groß als Zitat)"
+        type: string
+      - name: unterschrift
+        label: "Unterschrift unter dem Text (optional)"
+        type: string
       - name: ueber_bild
         label: "Foto zu „Über die Werkstatt“"
         type: image
