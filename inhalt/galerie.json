@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "bild": "/bilder/rahmen-hochsitz.jpg",
+    "titel": "Rahmen mit Schiefertafel, Tanne und Hirsch"
+  },
+  {
+    "bild": "/bilder/pfosten-laterne.jpg",
+    "titel": "Pfosten mit Laterne und Schiefertafel"
+  },
+  {
+    "bild": "/bilder/zaun-kleeblatt.jpg",
+    "titel": "Zaun mit Kleeblatt und Schiefertafel"
+  },
+  {
+    "bild": "/bilder/block-zuhause.jpg",
+    "titel": "Holzblock mit Schiefertafel und Herz"
+  },
+  {
+    "bild": "/bilder/aufsteller-erinnerungen.jpg",
+    "titel": "Aufsteller mit Herz und Schiefertafel"
+  },
+  {
+    "bild": "/bilder/pfosten-gardenfeeling.jpg",
+    "titel": "Gartenpfosten „Gardenfeeling“"
+  },
+  {
+    "bild": "/bilder/rahmen-schoenste-dinge.jpg",
+    "titel": "Rahmen mit Schiefertafel"
+  },
+  {
+    "bild": "/bilder/tafel-glueck.jpg",
+    "titel": "Schiefertafel zum Aufhängen"
+  },
+  {
+    "bild": "/bilder/fensterrahmen-zuhause.jpg",
+    "titel": "Fensterrahmen mit Schiefertafel"
+  },
+  {
+    "bild": "/bilder/herz-zusammen.jpg",
+    "titel": "Holzherz mit Schiefertafel"
+  },
+  {
+    "bild": "/bilder/ei-blumen.jpg",
+    "titel": "Ei mit Blumenmuster"
+  }
+]
